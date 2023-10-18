@@ -23,10 +23,14 @@
 #ifndef PQUEUE_H
 #define PQUEUE_H
 
+#include <iostream>
 #include <string>
 
 // The priority queue should be implemented using a pointer-based singly linked list 
 // that is sorted by priority in descending order. Descending order = highest priority will always be at index 0 
+
+// concerns:
+// accessors need to be const, is the clear function correct? 
 
 class PQueue {
     private:
@@ -47,32 +51,64 @@ class PQueue {
         int front(std::string& n);
 };
 
-int PQueue::enqueue(std::string name, int pri) {
+PQueue::~PQueue() {
+    while (head) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
 
+int PQueue::enqueue(std::string name, int pri) {
+    Node* newNode = new Node;
+    if (!newNode) { return -1; } // failed to allocate memory
+
+    newNode->name = name;
+    newNode->pri = pri;
+    newNode->next = nullptr;
+
+    if (!head || pri > head->pri) {
+        newNode->next = head;
+        head = newNode;
+    } else {
+        Node* curr = head; 
+        while (curr->next != nullptr && priority <= curr->next->pri) {
+            curr = curr->next;
+        }
+        newNode->next = curr->next;
+        curr->next = newNode;
+    }
+    
+    return 0;
 }
 
 int PQueue::dequeue() {
-    // dequeue - removes the highest priority node from the list. Returns 0 if successful, -1 otherwise. Since the list is always sorted by priority in descending order, this means it's always going to be the head node that gets deleted.
+    if (!head) {
+        return -1;
+    }
+
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+
+    return 0;
 }
 
 void PQueue::clear() {
-
+    while (head) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
 }
 
-int PQueue::front(std::string& n) {
+int PQueue::front(std::string& n) const {
+    if (!head) {
+        return -1;
+    }
 
+    n = head->name;
+    return 0; 
 }
 
-
-
-/*
-Let's assume the highest priority item is always at the head node.  Then, adding an item to the priority queue uses the exact same algorithm as the insert algorithm for a sorted, pointer-based linked list, the difference being, we flip that '<' similar to how we flipped it in the array-based implementation.  That's the only difference.  Performance?  Same...O(n).
-
-What about dequeue?  Let's recycle the pop method from the pointer-based stack and call it dequeue.  Exact same algorithm.  Why?  Pop always removed the head node, because the head node was the "top" of the stack.  For our priority queue, we'll always remove the head node, because it always contains the highest priority item.  Performance?  Same... O(1).
-
-Ok, what if the priorities are sorted in ascending order?  This means the lowest priority will always be the in the head node, and the highest priority will always be in the last node.  So, enqueue is recycling the insertion algorithm.  The exact same with the same performance... O(n).
-
-Dequeue always needs to remove the last node in the list, since it will always contain the highest priority.  So, that means a traversal and removing the last node.  Since there's the traversal, we have a performance of O(n).
-
-*/
-#endif
+#endif // PQUEUE_H
