@@ -1,25 +1,3 @@
-/* priority queue & regular queue
-
-    Explanation:
-        queues are like a line at the movie theater, priority queues are like the ER which are determined by the priority of the injured patient
-
-
-    Use Cases:
-        There are many ways a priority queue could be implemented.  
-        Let's consider just a few:  a sorted array-based list, an unsorted array-based list, 
-        a sorted pointer-based list, an unsorted pointer-based list, and a binary search tree.
-
-        sorted means sorted by priority value
-
-        pq is used for dijkstra's algorithm and A* search algorithm
-        in practical terms, its used for task scheduling and job scheduling, since they heavily rely on data structures.
-        or anything priority related, for example, weighted graphs, network routing, load balancing, etc
-
-        used in conjunction with binary heaps
-
-    
-*/
-
 #ifndef PQUEUE_H
 #define PQUEUE_H
 
@@ -28,9 +6,6 @@
 
 // The priority queue should be implemented using a pointer-based singly linked list 
 // that is sorted by priority in descending order. Descending order = highest priority will always be at index 0 
-
-// concerns:
-// accessors need to be const, is the clear function correct? 
 
 class PQueue {
     private:
@@ -60,8 +35,11 @@ PQueue::~PQueue() {
 }
 
 int PQueue::enqueue(std::string name, int pri) {
-    Node* newNode = new Node;
-    if (!newNode) { return -1; } // failed to allocate memory
+    Node* newNode = new {std::nothrow} Node;
+
+    if newNode == nullptr {
+        return -1;
+    }
 
     newNode->name = name;
     newNode->pri = pri;
@@ -102,7 +80,7 @@ void PQueue::clear() {
     }
 }
 
-int PQueue::front(std::string& n) const {
+int PQueue::front(std::string& n) {
     if (!head) {
         return -1;
     }
