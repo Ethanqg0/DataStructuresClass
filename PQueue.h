@@ -19,25 +19,20 @@ class PQueue {
 
     public:
         PQueue() : head(nullptr) {}
-        ~PQueue() {}
+        ~PQueue() {
+            clear();
+        }
         int enqueue(std::string name, int pri);
         int dequeue();
         void clear();
         int front(std::string& n);
+        void print();
 };
 
-PQueue::~PQueue() {
-    while (head) {
-        Node* temp = head;
-        head = head->next;
-        delete temp;
-    }
-}
-
 int PQueue::enqueue(std::string name, int pri) {
-    Node* newNode = new {std::nothrow} Node;
+    Node* newNode = new (std::nothrow) Node;
 
-    if newNode == nullptr {
+    if (newNode == nullptr) {
         return -1;
     }
 
@@ -50,7 +45,7 @@ int PQueue::enqueue(std::string name, int pri) {
         head = newNode;
     } else {
         Node* curr = head; 
-        while (curr->next != nullptr && priority <= curr->next->pri) {
+        while (curr->next != nullptr && pri <= curr->next->pri) {
             curr = curr->next;
         }
         newNode->next = curr->next;
@@ -87,6 +82,14 @@ int PQueue::front(std::string& n) {
 
     n = head->name;
     return 0; 
+}
+
+void PQueue::print() {
+    Node* curr = head;
+    while (curr) {
+        std::cout << curr->name << " " << curr->pri << std::endl;
+        curr = curr->next;
+    }
 }
 
 #endif // PQUEUE_H
