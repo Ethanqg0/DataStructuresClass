@@ -64,19 +64,12 @@
             3.5N
 */
 
-#include <vector>
-#include <iostream>
-
-using namespace std;
-
-// pass by reference because it is more efficient. passing by value creates overhead by copying the entire vector.
 #include <iostream>
 #include <vector>
 #include <cmath>
 
 using namespace std;
 
-// Define a structure to represent a candidate
 struct Candidate {
     string name;
     int id;
@@ -85,10 +78,11 @@ struct Candidate {
     Candidate(string n, int i, int s) : name(n), id(i), score(s) {}
 };
 
+// Immediate decision. Assumes the first candidate is the best and hires the first candidate that is better than the first.
 int immediateDecisionHiring(const vector<Candidate>& candidates) {
     int n = candidates.size();
-    int best = -1;  // Store the best candidate's score
-    int hired = -1;  // Store the index of the hired candidate
+    int best = -1;
+    int hired = -1; 
 
     for (int i = 0; i < n; i++) {
         if (candidates[i].score > best) {
@@ -104,7 +98,14 @@ int immediateDecisionHiring(const vector<Candidate>& candidates) {
     return hired;
 }
 
+
+// Explore-then-commit algorithm: Balancing Exploration and Exploitation:
+// Exploration: Interviewing a subset of candidates to gain information about candidate quality.
+// Exploitation: Selecting the best candidate based on the information gathered during exploration.
+// Finding clues from our subsets and creating dynamic decisions on continuining or stopping the exploration.
+
 int exploreThenCommitHiring(const vector<Candidate>& candidates) {
+    // TODO: finish algorithm
     return 0;
 }
 
