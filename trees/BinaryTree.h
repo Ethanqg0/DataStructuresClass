@@ -1,3 +1,10 @@
+/*
+    Module Docstrihgs
+
+    
+
+*/
+
 #ifndef TREE_H
 #define TREE_H
 
@@ -48,6 +55,7 @@ void BinaryTree::remove(Node* &r, int i) {
         remove(r->left, i);
     } else if (i > r->i) {
         remove(r->right, i);
+
     } else {
         if (!r->left) {
             Node* temp = r->right;
