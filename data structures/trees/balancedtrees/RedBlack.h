@@ -11,6 +11,11 @@
 
 */
 
+/*
+    For our red black tree, we will be making it generic
+
+*/
+
 #ifndef REDBLACK_H
 #define REDBLACK_H
 
@@ -30,28 +35,22 @@ class RedBlackTree {
     private:
         Node* root;
 
-        void add(Node* &r, int i);
+        void add(Node* &r, T value);
         void clear(Node* &r);
         void print(Node* r);
-        void remove(Node* &r, int i);
-        bool find(Node* r, int i) const;
+        void remove(Node* &r, T value);
+        bool find(Node* r, T value) const;
     
     // this is literally an api lol
     public:
         RedBlackTree() : root(nullptr) {}
         ~RedBlackTree() { clear(); }
 
-        void add(int i) { add(root, i); }
-        void remove(int i) { remove(root, i); }
-        bool find(int i) const { return find(root, i); }
+        void add(T value) { add(root, value); }
+        void remove(T value) { remove(root, value); }
+        bool find(T value) const { return find(root, value); }
         void print() { print(root); }
         void clear() { clear(root); root = nullptr; }
-
-        void rotateLeft(Node* &r);
-        void rotateRight(Node* &r);
-
-        void insertFixUp(Node* &r);
-        void deleteFixUp(Node* &r);
 };
 
 
