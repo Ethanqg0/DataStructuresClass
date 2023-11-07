@@ -3,6 +3,7 @@
     Balanced search trees are trees that are guaranteed to have a height of O(log n)
     A height of O(log n) means that the worst case scenario for searching for a node in the tree is O(log n)
     This height is optimal compared to a standard binary search tree which has a worst case scenario of O(n)
+    Deleting and inserting nodes in a 2-3 tree is also O(log n) in the worst case scenario
 
     Why is a 2-3 Tree optimal to a regular binary search tree:
         1) better worst case scenario of O(log n) compared to O(n)
