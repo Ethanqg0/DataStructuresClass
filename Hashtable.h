@@ -28,7 +28,7 @@ class HashTable {
                 throw std::runtime_error("Memory allocation failed for HashTable");
             }
         }
-        HashTable::~HashTable() {
+        ~HashTable() {
             delete[] table;
             table = nullptr; 
         }
@@ -124,8 +124,8 @@ bool HashTable::find(std::string s) const {
 
 int HashTable::hash(std::string s) const {
     int sum = 0;
-    for (char c : s) {
-        sum += c;
+    for (int i = 0; i < s.length(); i++) {
+        sum += s[i];
     }
     return sum % size;
 }
