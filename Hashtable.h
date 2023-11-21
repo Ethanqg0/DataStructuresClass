@@ -63,17 +63,53 @@ class HashTable {
         void insert(std::string s);
         void remove(std::string s);
         void clear();
+        void resize();
         bool isFull() const; 
         bool isEmpty() const;
         void print() const;
         bool find(std::string s) const;
         int hash(std::string s) const;
+        int loadFactor() const;
 };
 
-void HashTable::insert(std::string s) {
-    if (isFull()) {
-        throw std::runtime_error("Hash table is full");
+int HashTable::loadFactor() const {
+    int count = 0;
+    for (int i = 0; i < size; i++) {
+        if (table[i].mark == 2) {
+            count++;
+        }
     }
+    return count / size;
+}
+
+void HashTable::resize() {
+    int newSize = size * 2;
+    Element* newTable = new Element[newSize];
+
+    for (int i = 0; i < size; i++) {
+        if (table[i].mark == 2) {
+            int hashValue = hash(table[i].key);
+
+            // Linear probing: find the next available slot
+            for (int j = 0; j < newSize; j++) {
+                int index = (hashValue + j) % newSize;
+
+                if (newTable[index].mark != 2) {
+                    newTable[index].key = table[i].key;
+                    newTable[index].mark = 2;
+                    break;
+                }
+            }
+        }
+    }
+
+    delete[] table;
+    table = newTable;
+    size = newSize;
+}
+
+void HashTable::insert(std::string s) {
+    if (isFull()) { throw std::logic_error("Attempting to insert into a full hash table");}
 
     int hashValue = hash(s);
 
@@ -86,6 +122,11 @@ void HashTable::insert(std::string s) {
             table[index].mark = 2;
             return;
         }
+    }
+
+    if (loadFactor() >= 0.7) {
+        resize();
+        insert(s);
     }
 }
 
