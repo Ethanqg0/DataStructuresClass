@@ -1,3 +1,29 @@
+/*
+    Hash Table, a key-value data structure known for its fast insertion and lookup times.
+    Its insertion time, when practiced well, has an average case of O(1) and a worst case of O(n).
+    Its lookup time, when practiced well, has an average case of O(1) and a worst case of O(n).
+
+    For insertion, you can utilize chaining (linked lists), linear probing, or quadratic probing. 
+    Chaining creates a linked list at each index of the hash table.
+    Linear probing checks the next index of the hash table if the current index is occupied, using modulus.
+    Quadratic probing checks the next index of the hash table if the current index is occupied, using modulus and a quadratic function.
+
+    To determine the element of the hash table, you can use the ASCII values of the characters in the string. This is used in the hash function
+
+    To improve the quality of your hash table, you can add load factor and resizing.
+    Load factor is the ratio of the number of elements in the hash table to the size of the hash table. 
+        Around 0.7, the hash table is considered full.
+    Resizing is when you double the size of the hash table when the load factor is reached.
+        This is done to reduce the number of collisions and improve the quality of the hash table.
+
+    Hash table is known for its versatility because it can be used for many different applications. 
+    It can be used for a spell checker, a dictionary, a database, and more.
+
+    Essentially, hash tables are associative arrays, which are arrays that map keys to values rather than using indices.
+    indices suffer from slow lookup times, but associative arrays do not.
+    Associative arrays are also known as maps, dictionaries, or symbol tables.
+*/
+
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
